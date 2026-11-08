@@ -10,6 +10,8 @@ everything.
 
 ## What it does
 
+![Bar chart: with num_ctx 8192 a call averaged 63.4 s and 0 reloads; with num_ctx 40960 it averaged 110.7 s and 2 reloads, on the same five receipts with identical compute.](docs/img/reload-cost.svg)
+
 Five small pieces that keep every caller of a shared Ollama server on one context window per
 model. Node 20 or newer, zero dependencies.
 
@@ -110,6 +112,8 @@ npm test
   false alarm.
 
 ## How it works
+
+![Two callers asking one model for num_ctx 8192 and 40960 evict each other with a 19 GB reload until the evicted call fails at the 5-minute timeout; after the fix every caller reads one window, 16384, from one table.](docs/img/thrash.svg)
 
 ```text
             config/ollama-context.json  (one window per model)

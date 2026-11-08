@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="490" viewBox="0 0 1200 490" role="img" aria-labelledby="title desc">
+<title id="title">Two windows thrash one runner; one table fixes it</title>
+<desc id="desc">Two callers asked one model for num_ctx 8192 and 40960, so each load evicted the other with a 19 GB reload until the evicted call failed at the 5-minute timeout; after the fix every caller reads one window, 16384, from one table and the runner stays loaded.</desc>
+<rect x="0.5" y="0.5" width="1199" height="489" fill="#001B3B" stroke="#EDE7DC" stroke-width="1"/>
+<text x="40" y="56" font-family="Georgia, 'Playfair Display', serif" font-size="26" fill="#F2EDE2">Before: two windows, one runner</text>
+<text x="40" y="84" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#D8D3CA">July 28, 2026, 16:05 to 16:46</text>
+<rect x="60" y="112" width="230" height="72" rx="4" fill="none" stroke="#EDE7DC" stroke-width="1"/>
+<text x="175" y="142" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">receipt reader</text>
+<text x="175" y="168" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="middle" fill="#D8D3CA">num_ctx 8192</text>
+<rect x="330" y="112" width="230" height="72" rx="4" fill="none" stroke="#EDE7DC" stroke-width="1"/>
+<text x="445" y="142" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">voice summarizer</text>
+<text x="445" y="168" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="middle" fill="#D8D3CA">num_ctx 40960</text>
+<line x1="175" y1="184" x2="241.5" y2="270.9" stroke="#8C5348" stroke-width="3"/>
+<polygon points="250,282 235.9,275.1 247.1,266.6" fill="#8C5348"/>
+<line x1="445" y1="184" x2="378.5" y2="270.9" stroke="#8C5348" stroke-width="3"/>
+<polygon points="370,282 372.9,266.6 384.1,275.1" fill="#8C5348"/>
+<text x="196" y="240" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="end" fill="#D8D3CA">loads at 8192</text>
+<text x="424" y="240" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#D8D3CA">loads at 40960</text>
+<text x="310" y="214" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" text-anchor="middle" fill="#F2EDE2">each load</text>
+<text x="310" y="236" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="700" text-anchor="middle" fill="#F2EDE2">evicts the other</text>
+<rect x="160" y="284" width="300" height="72" rx="4" fill="none" stroke="#EDE7DC" stroke-width="2"/>
+<text x="310" y="314" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">one runner per model</text>
+<text x="310" y="340" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">19 GB reload on each switch</text>
+<line x1="310" y1="356" x2="310" y2="375" stroke="#8C5348" stroke-width="3"/>
+<polygon points="310,389 303,375 317,375" fill="#8C5348"/>
+<rect x="80" y="390" width="460" height="76" rx="4" fill="#8C5348"/>
+<text x="310" y="422" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">the evicted call hangs</text>
+<text x="310" y="448" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="middle" fill="#F2EDE2">load timeout: Ollama returns 500 at 5m0s</text>
+<line x1="600" y1="40" x2="600" y2="450" stroke="#D8D3CA" stroke-width="1"/>
+<text x="620" y="56" font-family="Georgia, 'Playfair Display', serif" font-size="26" fill="#F2EDE2">After: one table, one window</text>
+<text x="620" y="84" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#D8D3CA">Callers read the window instead of writing a number.</text>
+<rect x="700" y="112" width="380" height="72" rx="4" fill="none" stroke="#EDE7DC" stroke-width="1"/>
+<text x="890" y="142" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">config/ollama-context.json</text>
+<text x="890" y="168" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="middle" fill="#D8D3CA">&quot;qwen3.6:27b&quot;: 16384</text>
+<line x1="890" y1="184" x2="890" y2="203" stroke="#EDE7DC" stroke-width="2"/>
+<polygon points="890,215 884,203 896,203" fill="#EDE7DC"/>
+<rect x="790" y="216" width="200" height="38" rx="19" fill="none" stroke="#EDE7DC" stroke-width="1"/>
+<text x="890" y="241" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="middle" fill="#F2EDE2">contextFor(model)</text>
+<line x1="890" y1="254" x2="726.7" y2="288.5" stroke="#EDE7DC" stroke-width="2"/>
+<polygon points="715,291 725.5,282.6 728.0,294.4" fill="#EDE7DC"/>
+<rect x="640" y="292" width="150" height="64" rx="4" fill="none" stroke="#EDE7DC" stroke-width="1"/>
+<text x="715" y="320" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">caller A</text>
+<text x="715" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">num_ctx 16384</text>
+<line x1="715" y1="356" x2="733.8" y2="379.6" stroke="#EDE7DC" stroke-width="2"/>
+<polygon points="741.3,389 729.1,383.3 738.5,375.9" fill="#EDE7DC"/>
+<line x1="890" y1="254" x2="890" y2="279" stroke="#EDE7DC" stroke-width="2"/>
+<polygon points="890,291 884,279 896,279" fill="#EDE7DC"/>
+<rect x="815" y="292" width="150" height="64" rx="4" fill="none" stroke="#EDE7DC" stroke-width="1"/>
+<text x="890" y="320" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">caller B</text>
+<text x="890" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">num_ctx 16384</text>
+<line x1="890" y1="356" x2="890" y2="377" stroke="#EDE7DC" stroke-width="2"/>
+<polygon points="890,389 884,377 896,377" fill="#EDE7DC"/>
+<line x1="890" y1="254" x2="1053.3" y2="288.5" stroke="#EDE7DC" stroke-width="2"/>
+<polygon points="1065,291 1052.0,294.4 1054.5,282.6" fill="#EDE7DC"/>
+<rect x="990" y="292" width="150" height="64" rx="4" fill="none" stroke="#EDE7DC" stroke-width="1"/>
+<text x="1065" y="320" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">caller C</text>
+<text x="1065" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">num_ctx 16384</text>
+<line x1="1065" y1="356" x2="1046.2" y2="379.6" stroke="#EDE7DC" stroke-width="2"/>
+<polygon points="1038.8,389 1041.5,375.9 1050.9,383.3" fill="#EDE7DC"/>
+<rect x="700" y="390" width="380" height="76" rx="4" fill="#59591D"/>
+<text x="890" y="422" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#F2EDE2">one runner stays loaded</text>
+<text x="890" y="448" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="middle" fill="#F2EDE2">same window for every caller</text>
+</svg>

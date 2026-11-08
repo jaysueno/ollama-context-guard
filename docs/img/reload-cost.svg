@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="450" viewBox="0 0 1200 450" role="img" aria-labelledby="title desc">
+<title id="title">What a context reload costs</title>
+<desc id="desc">Average wall time per call on the same five receipts: 63.4 seconds with num_ctx 8192 and 0 reloads, 110.7 seconds with num_ctx 40960 and 2 reloads, with identical compute.</desc>
+<rect x="0.5" y="0.5" width="1199" height="449" fill="#001B3B" stroke="#EDE7DC" stroke-width="1"/>
+<text x="40" y="56" font-family="Georgia, 'Playfair Display', serif" font-size="30" fill="#F2EDE2">The window costs nothing in compute. The reload costs everything.</text>
+<text x="40" y="88" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" fill="#D8D3CA">Average wall time per call. A/B over 5 real receipts, same images, same prompt.</text>
+<text x="270" y="158" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="end" fill="#F2EDE2">num_ctx 8192</text>
+<text x="270" y="184" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="end" fill="#D8D3CA">17.4 GiB</text>
+<rect x="290" y="124" width="369.8" height="72" fill="#EDE7DC"/>
+<text x="310" y="167" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#001B3B">0 reloads</text>
+<text x="675.8" y="171" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#F2EDE2">63.4 s</text>
+<text x="270" y="256" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="end" fill="#F2EDE2">num_ctx 40960</text>
+<text x="270" y="282" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" text-anchor="end" fill="#D8D3CA">20.3 GiB</text>
+<rect x="290" y="222" width="369.8" height="72" fill="#EDE7DC"/>
+<rect x="659.8" y="222" width="275.9" height="72" fill="#8C5348"/>
+<text x="310" y="265" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" fill="#001B3B">same compute</text>
+<text x="679.8" y="265" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#F2EDE2">2 reloads</text>
+<text x="951.8" y="269" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#F2EDE2">110.7 s</text>
+<line x1="659.8" y1="116" x2="659.8" y2="302" stroke="#D8D3CA" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="290" y1="316" x2="990" y2="316" stroke="#EDE7DC" stroke-width="1"/>
+<line x1="290" y1="316" x2="290" y2="323" stroke="#EDE7DC" stroke-width="1"/>
+<text x="290" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">0</text>
+<line x1="406.7" y1="316" x2="406.7" y2="323" stroke="#EDE7DC" stroke-width="1"/>
+<text x="406.7" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">20</text>
+<line x1="523.3" y1="316" x2="523.3" y2="323" stroke="#EDE7DC" stroke-width="1"/>
+<text x="523.3" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">40</text>
+<line x1="640" y1="316" x2="640" y2="323" stroke="#EDE7DC" stroke-width="1"/>
+<text x="640" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">60</text>
+<line x1="756.7" y1="316" x2="756.7" y2="323" stroke="#EDE7DC" stroke-width="1"/>
+<text x="756.7" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">80</text>
+<line x1="873.3" y1="316" x2="873.3" y2="323" stroke="#EDE7DC" stroke-width="1"/>
+<text x="873.3" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">100</text>
+<line x1="990" y1="316" x2="990" y2="323" stroke="#EDE7DC" stroke-width="1"/>
+<text x="990" y="344" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">120</text>
+<text x="640" y="372" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" text-anchor="middle" fill="#D8D3CA">seconds per call</text>
+<text x="40" y="418" font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" fill="#F2EDE2">Same five receipts, same prompt, same compute to the decimal. The reload is the whole difference.</text>
+</svg>
