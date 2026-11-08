@@ -1,0 +1,21 @@
+{
+  "name": "ollama-context-guard",
+  "version": "1.0.0",
+  "description": "One model, one context window: a canonical num_ctx table, a static check that fails on a stray number, a runtime audit of what Ollama loaded, and chunking that never truncates.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Jay Sueno",
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./lib/ollama-context.js",
+    "./chunking": "./lib/voice-chunking.js",
+    "./generate": "./lib/guarded-generate.js"
+  },
+  "scripts": {
+    "test": "node test/discipline.test.mjs && node test/context.test.mjs && node test/voice-chunking.test.mjs && node test/context-audit.test.mjs",
+    "check": "node test/discipline.test.mjs",
+    "audit": "bash scripts/context-audit.sh"
+  }
+}

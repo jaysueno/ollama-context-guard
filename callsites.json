@@ -1,0 +1,8 @@
+{
+  "_comment": "What the static check scans. Fill callSites with every file in your repo that sends a request to Ollama, so a rename makes the check fail loudly instead of quietly covering less. root is relative to this file. skipPaths are prefixes (relative to root) that are not production callers, for example an eval harness that sweeps context sizes on purpose. An empty callSites list is refused: a scan that reaches no known call site proves nothing.",
+  "root": ".",
+  "extensions": [".js", ".mjs", ".cjs", ".ts", ".py"],
+  "skipDirs": ["node_modules", ".git", ".next", "venv", ".venv", "__pycache__", "dist", "build"],
+  "skipPaths": ["test/"],
+  "callSites": ["lib/guarded-generate.js"]
+}

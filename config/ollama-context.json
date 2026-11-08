@@ -1,0 +1,27 @@
+{
+  "_comment": "The canonical Ollama context window per model on a shared machine. One model = one context, for every caller, in every language. Read by lib/ollama-context.js; a Python or shell caller reads this same file. Never pass a literal num_ctx at a call site. Why: on 2026-07-28 one caller's literal 8192 fought another caller's literal 40960 over the same ~19 GB qwen runner and thrashed receipt reading dead for about 40 minutes.",
+  "_why_16384_and_not_40960": "Ollama 0.30.7 does NOT guarantee the requested num_ctx: its scheduler re-fits the context to FREE SYSTEM MEMORY at load time (log: predicted_num_ctx=N ... system_free=X). Measured on a 64 GB Mac Mini on 2026-07-28: a 40960 request needs predicted 20.3 GiB and was GRANTED at system_free 31.1-48.5 GiB but silently DOWNSIZED to 16384 at system_free 29.1-29.3 GiB. The machine oscillates 27-32 GiB free, so it straddles that boundary, and 40960 gets evicted and re-fitted repeatedly. A/B over 5 real receipts: identical compute at both windows (prompt 2962tok/25.6s, out 463tok/37.3s) but 8192 held the runner (load=0.3s every call, 63.4s avg) while 40960 paid two reloads (load=95.5s and 141.9s, 110.7s avg). 16384 needs only 17.8 GiB and was granted at system_free 29.1 GiB, so it sits well inside the boundary.",
+  "_escalation": "RESERVED, WITH NO CALLER USING IT AS OF 2026-08-20. The mechanism (contextForTokens) still exists for input that genuinely cannot fit the canonical window, where the alternative is Ollama SILENTLY TRUNCATING it (a wrong answer, not an error). Voice transcripts USED to be that caller (measured over 177: p50 1,495 tok, p90 8,919, p99 23,271, max 30,238; 15.3% escalated). They no longer escalate. Reason: the 2026-08-16 move to qwen3.8:27b-q8_0 changed the cost of 40960 from 'a reload' to 'does not fit': Ollama predicts 35.5 GiB for it, more than the machine reliably has free (~38-39 GiB, and far less with anything else resident), so the scheduler logged 'model predicted to exceed available memory, evicting' and refused the load. Every attempt then died at the client's 5-minute timeout. Long recordings silently stopped being summarized while short ones kept working, so nothing looked broken for four days. Voice now CHUNKS instead (lib/voice-chunking.js, test/voice-chunking.test.mjs): split into sections that each fit the canonical window, digest each, then summarize the digests. Shrink the request, never grow the window. Any new caller wanting escalation must first do the memory math for the model it targets.",
+  "_estimate_slack": "Safety multiplier on estimateTokens()'s crude ~4-chars/token approximation. Slack for the ESTIMATOR only: callers pass the COMPLETE budget (prompt + num_predict) to contextForTokens(). Measured effect on voice: 12.4% of 177 transcripts escalate with no slack, 15.3% at 1.10. An earlier version also added a flat 'prompt reserve' inside contextForTokens, double-counting against callers that had already included their prompt and pushing escalation to 24.9%.",
+  "_engine_window": "The context a second, non-Ollama engine was launched with (for example a llama.cpp server started with a fixed context size), for callers that PLAN around a window: transcript chunking is one. It is NOT an Ollama num_ctx and is never sent in a request body: that engine fixes its context at launch. Kept here so one file answers 'how much room does the local model have' for every engine, in every language. Change it ONLY together with the engine's launch flag; they must agree or a planner will size against a window the server does not have. windowFor() returns it when LOCAL_LLM_BACKEND=engine.",
+  "engine_window": 65536,
+  "default": 8192,
+  "estimate_slack": 1.1,
+  "models": {
+    "qwen3.6:27b": 16384,
+    "nomic-embed-text": 2048,
+    "nomic-embed-text:latest": 2048,
+    "deepseek-v4-flash": 16384,
+    "qwen3.8:27b": 16384,
+    "qwen3.8:27b-q8_0": 16384,
+    "lane-a": 65536,
+    "lane-b": 65536
+  },
+  "escalation": {
+    "qwen3.6:27b": 40960,
+    "qwen3.8:27b": 40960,
+    "qwen3.8:27b-q8_0": 40960
+  },
+  "_qwen38_note": "qwen3.8:27b added 2026-08-15. MEASURED on Ollama 0.32.13: 16384 granted (18GB resident, 100% GPU, load 3.6s) AND 40960 granted (still 18GB: the hybrid DeltaNet attention's KV is far lighter than the qwen3.5 family's, so escalation carries less eviction risk than it did on 3.6). Canonical stays 16384 to match the discipline every caller already runs. qwen3.6:27b entries KEPT as the rollback path. Generation is ~1.5-2x slower per receipt than 3.6 (77-149s solo vs ~66s), inside a 180s request budget. The q4 build 'qwen3.8:27b' is the default as of 2026-08-20; 'qwen3.8:27b-q8_0' is the accuracy rollback, kept on disk and in this table, reachable only by an explicit switch and never a code default. Two builds of one model are two runners: every q8 request while q4 is loaded costs a full ~19 GB unload and reload, which is exactly what blew a 180s request budget on 2026-08-20.",
+  "_escalation_memory_math": "Predicted load size at num_ctx 40960, measured from the Mac Mini's Ollama scheduler log: qwen3.6:27b = 20.3 GiB (fits above ~31 GiB free); qwen3.8:27b-q8_0 = 35.5 GiB (does NOT reliably fit: observed refused at available 38.8-39.0 GiB on 2026-08-20). At the canonical 16384, qwen3.6:27b = 17.8 GiB and qwen3.8:27b-q8_0 = 17.1 GiB, both comfortably resident."
+}
